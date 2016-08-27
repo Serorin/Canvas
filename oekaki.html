@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8">
+		<title>おえかき帳2</title>
+
+	</head>
+	<body>
+<script src="//cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.3/p5.js"></script>
+<script>
+var slider = []; //各スライダーを格納
+var input = []; //各inputを格納
+var　delButton;
+function setup(){ //最初に実行される関数
+  createCanvas(640,480); //canvasの作成
+  noStroke();
+
+//color用のスライダーとinput作成
+for(var i = 0; i < 3; i++){
+  slider[i] = createSlider(0,255,0);
+  slider[i].position(460,(i*30) + 10);
+  alider[i].input(sliderFunction);
+  input[i] = createInput("0");
+  input[i].size(30).position(600,(i*30) + 10);
+  input[i].input(inputFunction);
+}
+var rText = createElement("div","R").position(455,15);
+var gText = createElement("div","G").position(455,45);
+var bText = createElement("div","B").position(455,75);
+
+//weight用のスライダーとinput作成
+slider[3]= createSlider(1,20,5);
+slider[3].position(460,100);
+slider[3].input(sliderFunction);
+inout[3] = createInput("5");
+input[3].size(30).position(600,100);
+input[3].inout(inputFunction);
+var wText = createElement("div","W").position(455,105);
+
+//delボタン作成
+delButton = createButton("Clear");
+delButton.position(540,140);
+delButton.mousePressed(del);
+}
+
+function draw(){
+  //colorとweight用の値取得
+  r = alider[0].value();
+  g = alider[1].value();
+  b = alider[2].value();
+  w = alider[3].value();
+
+//マウスが押下した状態かどうか
+if(mouseIsPressed){
+  push();
+  stroke(r,g,b);//線の色指定
+  strokeWeight(w);//線の太さ指定
+  line(currentX,currentY,mouseX,mouseY);//線の描写
+  pop();
+}
+//カーソルのcanvas上の現在位置を保存しておく
+currentX = mouseX;
+currentY = mouseY;
+
+//右上のゲージ部分では線が描写されないようにする
+push();
+fill(200);
+rect(440,0,200,180);
+pop();
+}
+
+//canvas内の線を削除
+function del(){
+  background(255);
+}
+
+//inputの値を変更した時の処理
+function inputFunction(){
+  for(var i = 0; i < slider.length; i++){
+    var inputVal = input[i].value();
+    var sliderVal = slider[i].value();
+    if(i != 3){
+      var sliderMin = 0;
+      var sliderMax =255;
+    }
+    else{
+      var sliderMin = 1;
+      var sliderMax = 20;
+    }
+    //inputの値がスライダーの範囲内でない場合は飛ばす
+    if(!(inputVal >= sliderMin && inputVal <= sliderMax)){
+      continue;
+    }
+    //inputの値とスライダーの値が異なるとき
+    if(inputVal != sliderVal){
+      slider[i].value(inputVal);//スライダーの値を変更
+    }
+  }
+}
+
+//スライダーの値を変更した時の処理
+function sliderFunction(){
+  for(var i = 0; i < slider.length; i ++){
+    var inputVal = input[i].value();
+    var sliderVal = slider[i].value();
+    //スライダーの値とinputの値が異なるとき
+    if(inputVal != sliderVal){
+      input[i].value(sliderVal);//inputの値を変更
+    }
+  }
+}
+
+
+</script>
+</body>
+</html>

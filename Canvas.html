@@ -1,46 +1,85 @@
-<!DOCTYPE HTML>
-<html lang="ja-JP">
-<head>
-	<meta charset="UTF-8">
-  <link rel="stylesheet" href="Canvas.css" charset="utf-8">
-	<title>canvasApp</title>
-</head>
-<body  onload="init()">
-	<canvas id="first" width="500" height="500"></canvas>
-<script type="text/javascript">
-var canvas = document.getElementById('first');
-var ctx    = canvas.getContext('2d');
-function init(){
-	button(400,400,50,50);
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8">
+		<title>おえかき帳</title>
+
+	</head>
+	<body>
+<script src="//cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.3/p5.js"></script>
+<script>
+
+var colors;
+function setup(){
+	createCanvas(500,300);
+	background(200);
+	colors = color(0, 0, 0);
 }
-function clear(){
-  ctx.clearRect(0,0,500,500);
-}
+
+
 function draw(){
-  ctx.rect(20,20,200,200);
-  ctx.stroke();
+	//background(200);
+	if(mouseIsPressed){
+		stroke(colors);
+		line(mouseX, mouseY, pmouseX, pmouseY);
+		//point(mouseX,mouseY)
+	}
 }
-function button(x, y, width, height){
-	ctx.rect(x, y, width, height);
-	ctx.stroke();
-	var toggle = true;
-	canvas.addEventListener('click', function(e){
-		var button = e.target.getBoundingClientRect();
-	        mouseX = e.clientX - button.left;
-		mouseY = e.clientY - button.top;
-		if(x < mouseX && mouseX < x + width){
-			if(y < mouseY && mouseY < y + height){
-				if(toggle){
-					draw();
-					toggle = false;
-				}else{
-					clear();
-					toggle = true;
-				}
-			}
-		}
-	}, false);
+
+function keyTyped() {
+	if (key === "a") {
+		background(200);
+		colors = color(colors);
+	}
+	if(key === "r"){
+		colors = color(255,0,0);
+	}
+	if(key === "g"){
+		colors = color(0,255,0);
+	}
+	if(key === "b"){
+		colors = color(0,0,255);
+	}
+	if(key === "n"){
+		colors = color(0,0,0);
+	}
+	if(key === "e"){
+		colors = color(200);
+	}
+	if(key === "1"){
+		strokeWeight(1);
+	}
+	if(key === "2"){
+		strokeWeight(2);
+	}
+	if(key === "3"){
+		strokeWeight(3);
+	}
+	if(key === "4"){
+		strokeWeight(4);
+	}
+	if(key === "5"){
+		strokeWeight(5);
+	}
+	if(key === "6"){
+		strokeWeight(6);
+	}
+	if(key === "7"){
+		strokeWeight(7);
+	}
+	if(key === "8"){
+		strokeWeight(8);
+	}
+	if(key === "9"){
+		strokeWeight(9);
+	}
+	if(key === "0"){
+		strokeWeight(10);
+	}
 }
+
 </script>
-</body>
+
+<input type="range" name="line" value="1">
+	</body>
 </html>
